@@ -2,14 +2,26 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Pedidos;
+use App\Models\Cocina;
+use App\Models\Pedido;
 use Illuminate\Http\Request;
 
-class PedidosController extends Controller
+class CocinaController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
+
+    public function pantallaCocina()
+    {
+        // Traemos los pedidos pendientes (asumiendo que añadas un campo 'estado' en el futuro)
+        // Por ahora traemos los últimos pedidos con sus detalles
+        $pedidos = Pedido::with('detalles')
+            ->orderBy('created_at', 'asc') // El más antiguo primero para atender en orden
+            ->get();
+
+        return view('cocina', compact('pedidos'));
+    }
     public function index()
     {
         //
@@ -34,7 +46,7 @@ class PedidosController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Pedidos $pedidos)
+    public function show(Cocina $cocina)
     {
         //
     }
@@ -42,7 +54,7 @@ class PedidosController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Pedidos $pedidos)
+    public function edit(Cocina $cocina)
     {
         //
     }
@@ -50,7 +62,7 @@ class PedidosController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Pedidos $pedidos)
+    public function update(Request $request, Cocina $cocina)
     {
         //
     }
@@ -58,7 +70,7 @@ class PedidosController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Pedidos $pedidos)
+    public function destroy(Cocina $cocina)
     {
         //
     }
